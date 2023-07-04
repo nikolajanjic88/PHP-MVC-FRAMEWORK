@@ -12,10 +12,4 @@ class HomeController extends Controller
     return $this->view('home', $params);
   }
 
-  public function about()
-  {
-    $params = ['name' => 'Nikola'];
-    return $this->view('about', $params);
-  }
-
 }
