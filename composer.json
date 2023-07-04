@@ -1,0 +1,9 @@
+{
+    "name": "nikola/mvc",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "require": {}
+}
