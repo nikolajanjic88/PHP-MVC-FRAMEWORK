@@ -38,11 +38,6 @@ class Router
       return $this->view('404');
     }
 
-    if(is_string($callback))
-    {
-      return $this->view($callback);
-    }
-
     return call_user_func($callback, $this->request);
   }
 
