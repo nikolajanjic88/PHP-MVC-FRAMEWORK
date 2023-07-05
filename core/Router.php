@@ -37,7 +37,7 @@ class Router
       $this->response->setStatucCode();
       return $this->view('404');
     }
-
+    
     return call_user_func($callback, $this->request);
   }
 

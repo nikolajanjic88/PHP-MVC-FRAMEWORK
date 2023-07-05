@@ -38,6 +38,21 @@ abstract class Model
         {
           $this->addError($attr, 'min');
         }
+        if(is_array($rule) && $rule[0] === 'unique')
+        {
+          $class = $rule['class'];
+          $uniqueAttr = $attr;
+          $tableName = $class::tableName();
+          $stmt = App::$app->db->prepare("SELECT * FROM $tableName WHERE $uniqueAttr = :attr");
+          $stmt->bindValue(':attr', $value);
+          $stmt->execute();
+          $result = $stmt->fetchObject();
+          if($result)
+          {
+            $this->addError($attr, 'unique');
+          }
+
+        }
       }
     }
     return empty($this->errors);
@@ -54,7 +69,8 @@ abstract class Model
     return [
       'required' => 'This field is required',
       'email' => 'Invalid email address',
-      'min' => 'Min length must be 6 characters'
+      'min' => 'Min length must be 6 characters',
+      'unique' => 'Already exists'
     ];
   }
 

@@ -3,32 +3,32 @@
 namespace app\controllers;
 use app\core\Controller;
 use app\core\Request;
-use app\models\RegisterModel;
+use app\models\User;
 
 class AuthController extends Controller
 {
-  public RegisterModel $registerModel;
+  public User $user;
 
   public function __construct()
   {
-    $this->registerModel = new RegisterModel();
+    $this->user = new User();
   }
 
   public function index()
   {
-    return $this->view('register', ['model' => $this->registerModel]);
+    return $this->view('register', ['model' => $this->user]);
   }
 
   public function store(Request $request)
   {
     
-    $this->registerModel->loadData($request->getBody());
+    $this->user->loadData($request->getBody());
 
-    if($this->registerModel->validate() && $this->registerModel->register())
+    if($this->user->validate() && $this->user->save())
     {
       return 'SUCCESS';
     }
 
-    return $this->view('register', ['model' => $this->registerModel]);
+    return $this->view('register', ['model' => $this->user]);
   }
 }
