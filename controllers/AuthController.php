@@ -4,6 +4,7 @@ namespace app\controllers;
 use app\core\Controller;
 use app\core\Request;
 use app\models\User;
+use app\core\App;
 
 class AuthController extends Controller
 {
@@ -26,7 +27,9 @@ class AuthController extends Controller
 
     if($this->user->validate() && $this->user->save())
     {
-      return 'SUCCESS';
+      App::$app->session->setFlash('success', 'You have registered successfully');
+      App::$app->response->redirect('/');
+      die();
     }
 
     return $this->view('register', ['model' => $this->user]);
