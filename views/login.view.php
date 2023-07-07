@@ -1,13 +1,16 @@
 <?php include_once "inc/header.php" ?>
   <div class="container">
   <?php include_once "inc/navbar.php" ?>
-    <h1>Register</h1>
+    <?php
+      use app\core\App;
+      if(App::$app->session->getFlash('success')):
+    ?>
+    <div class="alert alert-success">
+        <?= App::$app->session->getFlash('success') ?>
+    </div>
+    <?php endif ?>
+    <h1>Login</h1>
     <form action="" method="post">
-      <div class="form-group">
-        <label for="name">Full Name</label>
-        <input type="text" class="form-control" id="name" name="name" value="<?= $model->name ?>">
-        <?= "<div class='error'>" . $model->getFirstError('name') ?? false . "</div>" ?>
-      </div>
       <div class="form-group">
         <label for="email">Email address</label>
         <input type="email" class="form-control" id="email" name="email" value="<?= $model->email ?>">

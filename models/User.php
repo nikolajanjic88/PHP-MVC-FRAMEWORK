@@ -33,4 +33,9 @@ class User extends DbModel
       'password' => ['required', 'min']
     ];
   }
+
+  public function primaryKey()
+  {
+    return 'id';
+  }
 }

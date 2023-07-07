@@ -28,15 +28,15 @@ abstract class Model
       {
         if($rule === 'required' && !$value)
         {
-          $this->addError($attr, 'required');
+          $this->addErrorForRule($attr, 'required');
         }
         if($rule === 'email' && !filter_var($value, FILTER_VALIDATE_EMAIL))
         {
-          $this->addError($attr, 'email');
+          $this->addErrorForRule($attr, 'email');
         }
         if($rule === 'min' && strlen($value) < 6)
         {
-          $this->addError($attr, 'min');
+          $this->addErrorForRule($attr, 'min');
         }
         if(is_array($rule) && $rule[0] === 'unique')
         {
@@ -49,7 +49,7 @@ abstract class Model
           $result = $stmt->fetchObject();
           if($result)
           {
-            $this->addError($attr, 'unique');
+            $this->addErrorForRule($attr, 'unique');
           }
 
         }
@@ -58,9 +58,14 @@ abstract class Model
     return empty($this->errors);
   }
 
-  public function addError($attr, $rule)
+  private function addErrorForRule($attr, $rule)
   {
     $message = $this->errorMessages()[$rule] ?? '';
+    $this->errors[$attr][] = $message;
+  }
+
+  public function addError($attr, $message)
+  {
     $this->errors[$attr][] = $message;
   }
 
